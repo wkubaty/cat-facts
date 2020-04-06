@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/factListFragment">
+
+    <fragment
+        android:id="@+id/factListFragment"
+        android:name="com.kubaty.catfacts.FactListFragment"
+        android:label="fragment_fact_list"
+        tools:layout="@layout/fragment_fact_list">
+        <action
+            android:id="@+id/action_factListFragment_to_factDetails"
+            app:destination="@id/factDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/factDetails"
+        android:name="com.kubaty.catfacts.FactDetails"
+        android:label="fragment_fact_details"
+        tools:layout="@layout/fragment_fact_details">
+
+        <argument
+            android:name="icon"
+            app:argType="string" />
+
+        <argument
+            android:name="updateDate"
+            app:argType="string" />
+
+        <argument
+            android:name="factText"
+            app:argType="string" />
+
+    </fragment>
+</navigation>
