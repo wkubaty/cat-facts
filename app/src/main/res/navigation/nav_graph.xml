@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/factDetails"
-        android:name="com.kubaty.catfacts.FactDetails"
+        android:name="com.kubaty.catfacts.FactDetailsFragment"
         android:label="fragment_fact_details"
         tools:layout="@layout/fragment_fact_details">
 

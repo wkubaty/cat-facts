@@ -6,6 +6,7 @@
     tools:context=".FactListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_facts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_grey"
