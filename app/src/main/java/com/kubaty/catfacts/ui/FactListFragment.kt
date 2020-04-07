@@ -1,21 +1,31 @@
-package com.kubaty.catfacts
+package com.kubaty.catfacts.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kubaty.catfacts.R
 import com.kubaty.catfacts.adapter.CatFactsListRecyclerAdapter
+import com.kubaty.catfacts.api.FactsController
 import com.kubaty.catfacts.model.CatFact
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fact_list.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FactListFragment : Fragment(), CatFactsListRecyclerAdapter.OnFactClickListener {
+class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactClickListener {
     private lateinit var navController: NavController
     private lateinit var recyclerViewAdapter: CatFactsListRecyclerAdapter
+
+    @Inject
+    lateinit var factsController: FactsController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +38,12 @@ class FactListFragment : Fragment(), CatFactsListRecyclerAdapter.OnFactClickList
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        initRecyclerView()
+        GlobalScope.launch { //todo move to VM
+            val factsResponse = factsController.getFacts("cat", 30)
+            withContext(Dispatchers.Main) {
+                initRecyclerView(factsResponse.body()!!)
+            }
+        }
     }
 
     override fun onFactClick(factIndex: Int) {
@@ -37,10 +52,9 @@ class FactListFragment : Fragment(), CatFactsListRecyclerAdapter.OnFactClickList
         navController.navigate(R.id.action_factListFragment_to_factDetails, bundle)
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(facts: List<CatFact>) {
         rv_facts.layoutManager = LinearLayoutManager(context)
-        val tmpFacts = listOf(CatFact("1", "10.10.2020", "Test cat")) // todo
-        recyclerViewAdapter = CatFactsListRecyclerAdapter(tmpFacts, this)
+        recyclerViewAdapter = CatFactsListRecyclerAdapter(facts, this)
         rv_facts.adapter = recyclerViewAdapter
     }
 }
