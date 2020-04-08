@@ -1,4 +1,4 @@
-package com.kubaty.catfacts.di
+package com.kubaty.catfacts.di.network
 
 import com.kubaty.catfacts.api.FactsController
 import com.kubaty.catfacts.api.FactsService

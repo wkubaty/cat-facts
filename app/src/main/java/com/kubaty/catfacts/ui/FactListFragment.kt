@@ -5,27 +5,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kubaty.catfacts.R
 import com.kubaty.catfacts.adapter.CatFactsListRecyclerAdapter
-import com.kubaty.catfacts.api.FactsController
+import com.kubaty.catfacts.di.viewmodel.ViewModelFactory
 import com.kubaty.catfacts.model.CatFact
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fact_list.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactClickListener {
     private lateinit var navController: NavController
     private lateinit var recyclerViewAdapter: CatFactsListRecyclerAdapter
+    private lateinit var viewModel: FactListViewModel
 
     @Inject
-    lateinit var factsController: FactsController
+    lateinit var providerFactory: ViewModelFactory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, providerFactory).get(FactListViewModel::class.java)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +42,12 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+        viewModel.getFactsLiveData().observe(viewLifecycleOwner, Observer {
+            initRecyclerView(it)
+        })
+        viewModel.getNewFacts(30)
 
-        GlobalScope.launch { //todo move to VM
-            val factsResponse = factsController.getFacts("cat", 30)
-            withContext(Dispatchers.Main) {
-                initRecyclerView(factsResponse.body()!!)
-            }
-        }
+
     }
 
     override fun onFactClick(factIndex: Int) {

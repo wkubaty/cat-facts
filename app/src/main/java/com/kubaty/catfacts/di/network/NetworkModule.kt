@@ -1,4 +1,4 @@
-package com.kubaty.catfacts.di
+package com.kubaty.catfacts.di.network
 
 import dagger.Module
 import dagger.Provides
