@@ -5,28 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kubaty.catfacts.api.FactsController
+import com.kubaty.catfacts.FactsRepository
 import com.kubaty.catfacts.model.CatFact
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FactListViewModel @Inject constructor(private val factsController: FactsController) :
+class FactListViewModel @Inject constructor(private val factsRepository: FactsRepository) :
     ViewModel() {
     private val factsLiveData: MutableLiveData<List<CatFact>> = MutableLiveData()
     fun getFactsLiveData(): LiveData<List<CatFact>> = factsLiveData
 
-    fun getNewFacts(amount: Int) {
+    fun getNewFacts(animalType: String = "cat", amount: Int) {
         viewModelScope.launch {
             try {
-                val factsResponse = factsController.getFacts(amount = amount)
-                if (factsResponse.isSuccessful) {
-                    val facts = factsResponse.body()
-                    factsLiveData.value = facts
-                } else {
-                    Log.d(TAG, "Error when fetching data")
-                }
+                factsLiveData.value = factsRepository.getFacts(animalType, amount).value
             } catch (t: Throwable) {
-                Log.d(TAG, "Error when fetching data")
+                Log.d(TAG, "Error when fetching data") //todo
 
             }
         }

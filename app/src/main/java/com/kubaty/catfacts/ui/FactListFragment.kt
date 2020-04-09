@@ -45,9 +45,7 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
         viewModel.getFactsLiveData().observe(viewLifecycleOwner, Observer {
             initRecyclerView(it)
         })
-        viewModel.getNewFacts(30)
-
-
+        viewModel.getNewFacts(amount = 30)
     }
 
     override fun onFactClick(factIndex: Int) {
