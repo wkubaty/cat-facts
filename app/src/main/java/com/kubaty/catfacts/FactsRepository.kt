@@ -10,9 +10,6 @@ class FactsRepository @Inject constructor(private val factsController: FactsCont
     private val catFactsCache = MutableLiveData<List<CatFact>>()
 
     suspend fun getFacts(animalType: String, amount: Int): MutableLiveData<List<CatFact>> {
-        if (catFactsCache.value != null) {
-            return catFactsCache
-        }
         val factsResponse = factsController.getFacts(animalType, amount)
         if (factsResponse.isSuccessful) {
             val facts = factsResponse.body()

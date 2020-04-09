@@ -15,13 +15,17 @@ class FactListViewModel @Inject constructor(private val factsRepository: FactsRe
     private val factsLiveData: MutableLiveData<List<CatFact>> = MutableLiveData()
     fun getFactsLiveData(): LiveData<List<CatFact>> = factsLiveData
 
+    init {
+        getNewFacts(amount = 30)
+    }
+
     fun getNewFacts(animalType: String = "cat", amount: Int) {
         viewModelScope.launch {
             try {
                 factsLiveData.value = factsRepository.getFacts(animalType, amount).value
             } catch (t: Throwable) {
                 Log.d(TAG, "Error when fetching data") //todo
-
+//
             }
         }
     }

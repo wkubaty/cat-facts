@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FactListFragment">
+    tools:context=".ui.FactListFragment"
+    android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_facts"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_fact_list"
         android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        tools:listitem="@layout/cat_list_item"
-        tools:itemCount="3" />
-</FrameLayout>
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_facts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            tools:listitem="@layout/cat_list_item"
+            tools:itemCount="3" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

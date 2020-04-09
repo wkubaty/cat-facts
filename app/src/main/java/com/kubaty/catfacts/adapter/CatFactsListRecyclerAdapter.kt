@@ -9,10 +9,9 @@ import com.kubaty.catfacts.model.CatFact
 import kotlinx.android.synthetic.main.cat_list_item.view.*
 
 class CatFactsListRecyclerAdapter(
-    private val catFacts: List<CatFact>,
+    private var catFacts: List<CatFact>,
     private val onFactClickListener: OnFactClickListener
 ) : RecyclerView.Adapter<CatFactsListRecyclerAdapter.FactViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactViewHolder {
         return FactViewHolder(
@@ -33,6 +32,10 @@ class CatFactsListRecyclerAdapter(
 
     fun getFactAt(factIndex: Int): CatFact {
         return catFacts[factIndex]
+    }
+
+    fun updateData(catFacts: List<CatFact>) {
+        this.catFacts = catFacts
     }
 
     inner class FactViewHolder(itemView: View, onFactClickListener: OnFactClickListener) :
