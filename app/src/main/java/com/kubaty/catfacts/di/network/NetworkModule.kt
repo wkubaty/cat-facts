@@ -23,7 +23,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit {
+    fun provideRetrofit(
+        gson: Gson
+    ): Retrofit {
         return Retrofit.Builder().apply {
             baseUrl(API_BASE)
             addConverterFactory(GsonConverterFactory.create(gson))

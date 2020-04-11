@@ -1,17 +1,22 @@
 package com.kubaty.catfacts.api
 
 import com.kubaty.catfacts.model.CatFact
+import com.kubaty.catfacts.util.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import javax.inject.Inject
 
 class FactsController @Inject constructor(private val factsService: FactsService) {
     suspend fun getFacts(
         animalType: String,
         amount: Int
-    ): Response<List<CatFact>> =
-        withContext(Dispatchers.IO) {
-            factsService.getFacts(animalType, amount)
+    ): ApiResponse<List<CatFact>> = withContext(Dispatchers.IO) {
+        try {
+            val response = factsService.getFacts(animalType, amount)
+            ApiResponse.create(response)
+        } catch (t: Throwable) {
+            val errorResponse: ApiResponse<List<CatFact>> = ApiResponse.create(t)
+            errorResponse
         }
+    }
 }

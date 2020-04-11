@@ -3,7 +3,7 @@ package com.kubaty.catfacts.di.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kubaty.catfacts.ui.FactDetailsViewModel
-import com.kubaty.catfacts.ui.FactListViewModel
+import com.kubaty.catfacts.ui.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -15,8 +15,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(FactListViewModel::class)
-    abstract fun bindFactListViewModel(factListViewModel: FactListViewModel): ViewModel
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindFactListViewModel(mainViewModel: MainViewModel): ViewModel
 
     @Binds
     @IntoMap

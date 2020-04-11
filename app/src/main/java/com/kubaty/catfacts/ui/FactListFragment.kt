@@ -10,9 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import com.kubaty.catfacts.R
 import com.kubaty.catfacts.adapter.CatFactsListRecyclerAdapter
 import com.kubaty.catfacts.di.viewmodel.ViewModelFactory
+import com.kubaty.catfacts.ui.state.MainStateEvent
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_fact_list.*
 import javax.inject.Inject
@@ -21,14 +23,17 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     SwipeRefreshLayout.OnRefreshListener {
     private lateinit var navController: NavController
     private lateinit var recyclerViewAdapter: CatFactsListRecyclerAdapter
-    private lateinit var viewModel: FactListViewModel
+    private lateinit var viewModel: MainViewModel
 
     @Inject
     lateinit var providerFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, providerFactory).get(FactListViewModel::class.java)
+        viewModel = activity?.run {
+            ViewModelProvider(this, providerFactory).get(MainViewModel::class.java)
+        } ?: throw Exception("Invalid activity")
+
     }
 
     override fun onCreateView(
@@ -44,13 +49,32 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
         (activity as AppCompatActivity?)?.setSupportActionBar(toolbar_fact_list)
         navController = Navigation.findNavController(view)
         initRecyclerView()
+        viewModel.dataState.observe(viewLifecycleOwner, Observer { dataState ->
+            dataState.data?.let { mainViewState ->
+                mainViewState.facts?.let {
+                    viewModel.setViewStateFacts(it)
+                }
+            }
 
-        viewModel.getFactsLiveData().observe(viewLifecycleOwner, Observer {
-            recyclerViewAdapter.updateData(it)
-            rv_facts.adapter?.notifyDataSetChanged()
+            swipe_layout.isRefreshing = dataState.loading
+
+            dataState.message?.let {
+                showErrorSnackbar(it)
+            }
+
         })
-
+        viewModel.viewState.observe(viewLifecycleOwner, Observer { mainViewState ->
+            mainViewState.facts?.let { facts ->
+                recyclerViewAdapter.updateData(facts)
+                rv_facts.adapter?.notifyDataSetChanged()
+            }
+        })
         swipe_layout.setOnRefreshListener(this)
+
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        Snackbar.make(ll_fragment_fact_list, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onFactClick(factIndex: Int) {
@@ -72,7 +96,7 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_refresh -> {
-                viewModel.getNewFacts(amount = CATS_AMOUNT)
+                onRefresh()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -80,11 +104,10 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     }
 
     override fun onRefresh() {
-        viewModel.getNewFacts(amount = CATS_AMOUNT)
-        swipe_layout.isRefreshing = false
+        viewModel.setStateEvent(MainStateEvent.LoadFactsEvent())
     }
 
     companion object {
-        const val CATS_AMOUNT = 30
+        private const val TAG = "FactListFragment"
     }
 }

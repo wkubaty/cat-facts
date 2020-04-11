@@ -12,7 +12,4 @@ object NetworkServiceModule {
     fun provideFactsService(retrofit: Retrofit): FactsService =
         retrofit.create(FactsService::class.java)
 
-//    @Provides
-//    fun provideFactsController(factsService: FactsService): FactsController =
-//        FactsController(factsService)
 }
