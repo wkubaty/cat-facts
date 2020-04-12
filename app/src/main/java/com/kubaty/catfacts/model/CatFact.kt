@@ -5,5 +5,6 @@ import java.util.*
 data class CatFact(
     val _id: String,
     val updatedAt: Date,
-    val text: String
+    val text: String,
+    var drawableId: Int
 )

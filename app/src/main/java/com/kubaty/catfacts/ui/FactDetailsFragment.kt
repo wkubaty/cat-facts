@@ -23,8 +23,9 @@ class FactDetailsFragment : DaggerFragment() {
         super.onCreate(savedInstanceState)
         val updatedAt = arguments?.getSerializable("updatedAt") as Date? ?: return
         val factText = arguments?.getString("factText") ?: return
+        val drawableId = arguments?.getInt("drawableId") ?: return
         viewModel = ViewModelProvider(this, providerFactory).get(FactDetailsViewModel::class.java)
-        viewModel.setFact(updatedAt, factText)
+        viewModel.setFact(updatedAt, factText, drawableId)
     }
 
     override fun onCreateView(
@@ -39,6 +40,7 @@ class FactDetailsFragment : DaggerFragment() {
         configureToolbar()
         tv_details_update_date.text = viewModel.catFact.updatedAt.toString()
         tv_details_text.text = viewModel.catFact.text
+        iv_details_cat_icon.setImageResource(viewModel.catFact.drawableId)
     }
 
     private fun configureToolbar() {

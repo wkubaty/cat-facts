@@ -1,13 +1,13 @@
 package com.kubaty.catfacts.util
 
 data class DataState<T>(
-    val message: String? = null,
+    val message: Event<String>? = null,
     val loading: Boolean = false,
-    val data: T? = null
+    val data: Event<T>? = null
 ) {
     companion object {
         fun <T> data(message: String? = null, data: T?): DataState<T> {
-            return DataState(message = message, data = data)
+            return DataState(message = Event.messageEvent(message), data = Event.dataEvent(data))
         }
 
         fun <T> loading(loading: Boolean): DataState<T> {
@@ -15,7 +15,7 @@ data class DataState<T>(
         }
 
         fun <T> error(message: String): DataState<T> {
-            return DataState(message = message)
+            return DataState(message = Event.messageEvent(message))
         }
     }
 }

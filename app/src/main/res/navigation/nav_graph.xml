@@ -21,8 +21,8 @@
         tools:layout="@layout/fragment_fact_details">
 
         <argument
-            android:name="icon"
-            app:argType="string" />
+            android:name="drawableId"
+            app:argType="integer" />
 
         <argument
             android:name="updateDate"

@@ -50,18 +50,21 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
         navController = Navigation.findNavController(view)
         initRecyclerView()
         viewModel.dataState.observe(viewLifecycleOwner, Observer { dataState ->
-            dataState.data?.let { mainViewState ->
-                mainViewState.facts?.let {
-                    viewModel.setViewStateFacts(it)
+            dataState.data?.let { event ->
+                event.getContentIfNotHandled()?.let { mainViewState ->
+                    mainViewState.facts?.let {
+                        viewModel.setViewStateFacts(it, requireContext())
+                    }
                 }
             }
 
             swipe_layout.isRefreshing = dataState.loading
 
-            dataState.message?.let {
-                showErrorSnackbar(it)
+            dataState.message?.let { event ->
+                event.getContentIfNotHandled()?.let {
+                    showErrorSnackbar(it)
+                }
             }
-
         })
         viewModel.viewState.observe(viewLifecycleOwner, Observer { mainViewState ->
             mainViewState.facts?.let { facts ->
@@ -79,7 +82,11 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
 
     override fun onFactClick(factIndex: Int) {
         val fact = recyclerViewAdapter.getFactAt(factIndex)
-        val bundle = bundleOf("updatedAt" to fact.updatedAt, "factText" to fact.text)
+        val bundle = bundleOf(
+            "updatedAt" to fact.updatedAt,
+            "factText" to fact.text,
+            "drawableId" to fact.drawableId
+        )
         navController.navigate(R.id.action_factListFragment_to_factDetails, bundle)
     }
 

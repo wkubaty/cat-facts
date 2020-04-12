@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="cat_images">
+        <item>@drawable/cat_1</item>
+        <item>@drawable/cat_2</item>
+        <item>@drawable/cat_3</item>
+        <item>@drawable/cat_4</item>
+        <item>@drawable/cat_5</item>
+        <item>@drawable/cat_6</item>
+        <item>@drawable/cat_7</item>
+        <item>@drawable/cat_8</item>
+        <item>@drawable/cat_9</item>
+        <item>@drawable/cat_10</item>
+        <item>@drawable/cat_11</item>
+        <item>@drawable/cat_12</item>
+        <item>@drawable/cat_13</item>
+        <item>@drawable/cat_14</item>
+        <item>@drawable/cat_15</item>
+        <item>@drawable/cat_16</item>
+        <item>@drawable/cat_17</item>
+        <item>@drawable/cat_18</item>
+        <item>@drawable/cat_19</item>
+        <item>@drawable/cat_20</item>
+        <item>@drawable/cat_21</item>
+        <item>@drawable/cat_22</item>
+        <item>@drawable/cat_23</item>
+        <item>@drawable/cat_24</item>
+        <item>@drawable/cat_25</item>
+        <item>@drawable/cat_26</item>
+        <item>@drawable/cat_27</item>
+        <item>@drawable/cat_28</item>
+        <item>@drawable/cat_29</item>
+        <item>@drawable/cat_30</item>
+    </array>
+</resources>

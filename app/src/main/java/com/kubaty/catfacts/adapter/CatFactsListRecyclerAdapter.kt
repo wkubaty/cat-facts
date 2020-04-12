@@ -8,6 +8,7 @@ import com.kubaty.catfacts.R
 import com.kubaty.catfacts.model.CatFact
 import kotlinx.android.synthetic.main.cat_list_item.view.*
 
+
 class CatFactsListRecyclerAdapter(
     private var catFacts: List<CatFact>,
     private val onFactClickListener: OnFactClickListener
@@ -19,8 +20,8 @@ class CatFactsListRecyclerAdapter(
                 R.layout.cat_list_item,
                 parent,
                 false
-            )
-            , onFactClickListener
+            ),
+            onFactClickListener
         )
     }
 
@@ -35,12 +36,14 @@ class CatFactsListRecyclerAdapter(
     }
 
     fun updateData(catFacts: List<CatFact>) {
+
         this.catFacts = catFacts
     }
 
     inner class FactViewHolder(itemView: View, onFactClickListener: OnFactClickListener) :
         RecyclerView.ViewHolder(itemView) {
         private val factId = itemView.tv_fact_id
+        private val icon = itemView.iv_item_cat_icon
 
         init {
             itemView.setOnClickListener {
@@ -50,6 +53,7 @@ class CatFactsListRecyclerAdapter(
 
         fun bind(fact: CatFact) {
             factId.text = fact._id
+            icon.setImageResource(fact.drawableId)
         }
     }
 

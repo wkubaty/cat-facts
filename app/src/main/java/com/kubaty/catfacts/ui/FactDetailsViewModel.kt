@@ -8,7 +8,7 @@ import javax.inject.Inject
 class FactDetailsViewModel @Inject constructor() : ViewModel() {
     lateinit var catFact: CatFact
 
-    fun setFact(updatedAt: Date, factText: String) {
-        catFact = CatFact("", updatedAt, factText)
+    fun setFact(updatedAt: Date, factText: String, drawableId: Int) {
+        catFact = CatFact("", updatedAt, factText, drawableId)
     }
 }
