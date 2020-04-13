@@ -57,7 +57,7 @@ class MainViewModel @Inject constructor(private val factsRepository: IFactsRepos
 
     fun setViewStateFacts(
         facts: List<CatFact>,
-        context: Context
+        context: Context?
     ) {
         val update = getCurrentViewState()
         val newFacts = getNewFacts(facts, context)
@@ -65,10 +65,12 @@ class MainViewModel @Inject constructor(private val factsRepository: IFactsRepos
         mutableViewState.value = update
     }
 
-    private fun getNewFacts(facts: List<CatFact>, context: Context): List<CatFact> {
-        val randomDrawables = getRandomDrawables(context, facts.size)
-        facts.mapIndexed { index, catFact ->
-            catFact.drawableId = randomDrawables[index]
+    private fun getNewFacts(facts: List<CatFact>, context: Context?): List<CatFact> {
+        context?.let {
+            val randomDrawables = getRandomDrawables(context, facts.size)
+            facts.mapIndexed { index, catFact ->
+                catFact.drawableId = randomDrawables[index]
+            }
         }
         return facts
     }
