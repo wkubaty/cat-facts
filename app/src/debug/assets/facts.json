@@ -1,0 +1,34 @@
+[
+  {
+    "used": false,
+    "source": "api",
+    "type": "cat",
+    "deleted": false,
+    "_id": "591f98783b90f7150a19c1bd",
+    "__v": 0,
+    "text": "Some fact about cat.",
+    "updatedAt": "2020-01-02T02:02:48.616Z",
+    "createdAt": "2018-01-04T01:10:54.673Z",
+    "status": {
+      "verified": true,
+      "sentCount": 1
+    },
+    "user": "5a9ac18c7478810ea6c06381"
+  },
+  {
+    "used": false,
+    "source": "api",
+    "type": "cat",
+    "deleted": false,
+    "_id": "591f97f08dec2e14e3c20b08",
+    "__v": 0,
+    "text": "Cats can be taught to walk on a leash, but a lot of time and patience is required to teach them. The younger the cat is, the easier it will be for them to learn.",
+    "updatedAt": "2020-01-02T02:02:48.616Z",
+    "createdAt": "2018-01-04T01:10:54.673Z",
+    "status": {
+      "verified": true,
+      "sentCount": 1
+    },
+    "user": "5a9ac18c7478810ea6c06381"
+  }
+]

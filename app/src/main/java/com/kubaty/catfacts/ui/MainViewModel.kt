@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.kubaty.catfacts.R
 import com.kubaty.catfacts.model.CatFact
-import com.kubaty.catfacts.repository.FactsRepository
+import com.kubaty.catfacts.repository.IFactsRepository
 import com.kubaty.catfacts.ui.state.MainStateEvent
 import com.kubaty.catfacts.ui.state.MainViewState
 import com.kubaty.catfacts.util.DataState
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val factsRepository: FactsRepository) :
+class MainViewModel @Inject constructor(private val factsRepository: IFactsRepository) :
     ViewModel() {
 
     private val mutableViewState: MutableLiveData<MainViewState> = MutableLiveData()
@@ -18,6 +18,12 @@ class MainViewModel @Inject constructor(private val factsRepository: FactsReposi
 
     private val mutableStateEvent: MutableLiveData<MainStateEvent> = MutableLiveData()
     private val stateEvent: LiveData<MainStateEvent> = mutableStateEvent
+
+    lateinit var catFact: CatFact
+
+    fun setFact(fact: CatFact) {
+        catFact = fact
+    }
 
     val dataState: LiveData<DataState<MainViewState>> =
         Transformations.switchMap(stateEvent) { stateEvent ->
@@ -29,7 +35,7 @@ class MainViewModel @Inject constructor(private val factsRepository: FactsReposi
                                 stateEvent.animalType,
                                 stateEvent.amount
                             )
-                            emitSource(facts)
+                            emit(facts)
                         }
                     }
 

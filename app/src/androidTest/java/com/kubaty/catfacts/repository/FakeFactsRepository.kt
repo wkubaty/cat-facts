@@ -1,12 +1,14 @@
 package com.kubaty.catfacts.repository
 
-import com.kubaty.catfacts.api.FactsController
+import com.kubaty.catfacts.api.FakeFactsController
 import com.kubaty.catfacts.ui.state.MainViewState
 import com.kubaty.catfacts.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class FactsRepository @Inject constructor(private val factsController: FactsController) :
-    IFactsRepository {
+@Singleton
+class FakeFactsRepository @Inject constructor(private val factsController: FakeFactsController) : IFactsRepository {
+
     override suspend fun getFacts(animalType: String, amount: Int): DataState<MainViewState> {
 
         val response = factsController.getFacts(

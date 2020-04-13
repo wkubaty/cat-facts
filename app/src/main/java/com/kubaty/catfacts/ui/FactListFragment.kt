@@ -83,9 +83,7 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     override fun onFactClick(factIndex: Int) {
         val fact = recyclerViewAdapter.getFactAt(factIndex)
         val bundle = bundleOf(
-            "updatedAt" to fact.updatedAt,
-            "factText" to fact.text,
-            "drawableId" to fact.drawableId
+            "fact" to fact
         )
         navController.navigate(R.id.action_factListFragment_to_factDetails, bundle)
     }

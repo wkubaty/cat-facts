@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_compare"
+        android:id="@+id/toolbar_fact_details"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:layout_height="wrap_content"
