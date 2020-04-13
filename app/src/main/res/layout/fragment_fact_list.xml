@@ -15,18 +15,48 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_facts"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_facts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                tools:listitem="@layout/cat_list_item"
+                tools:itemCount="3" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_network_error_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            tools:listitem="@layout/cat_list_item"
-            tools:itemCount="3" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:visibility="gone">
 
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/cat_error"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_margin"
+                android:layout_marginLeft="@dimen/double_margin"
+                android:layout_marginRight="@dimen/double_margin"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/couldnt_fetch_data"
+                android:textSize="@dimen/text_size_medium" />
+
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

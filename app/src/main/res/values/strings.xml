@@ -3,4 +3,5 @@
 
     <string name="cat_icon">cat icon</string>
     <string name="refresh">Refresh</string>
+    <string name="couldnt_fetch_data">"Couldn't fetch data."</string>
 </resources>

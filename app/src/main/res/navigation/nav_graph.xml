@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_fact_list">
         <action
             android:id="@+id/action_factListFragment_to_factDetails"
-            app:destination="@id/factDetails" />
+            app:destination="@id/factDetails"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/factDetails"
@@ -22,7 +26,11 @@
 
         <argument
             android:name="fact"
-            app:argType="com.kubaty.catfacts.model.CatFact" />
+            app:argType="com.kubaty.catfacts.model.CatFact"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
 
     </fragment>
 </navigation>

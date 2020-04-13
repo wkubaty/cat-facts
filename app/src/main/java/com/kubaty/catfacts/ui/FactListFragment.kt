@@ -49,6 +49,7 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
         (activity as AppCompatActivity?)?.setSupportActionBar(toolbar_fact_list)
         navController = Navigation.findNavController(view)
         initRecyclerView()
+
         viewModel.dataState.observe(viewLifecycleOwner, Observer { dataState ->
             dataState.data?.let { event ->
                 event.getContentIfNotHandled()?.let { mainViewState ->
@@ -59,13 +60,16 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
             }
 
             swipe_layout.isRefreshing = dataState.loading
-
+            if (!dataState.loading) {
+                handleInitialErrorInfo(viewModel.viewState.value?.facts.isNullOrEmpty())
+            }
             dataState.message?.let { event ->
                 event.getContentIfNotHandled()?.let {
                     showErrorSnackbar(it)
                 }
             }
         })
+
         viewModel.viewState.observe(viewLifecycleOwner, Observer { mainViewState ->
             mainViewState.facts?.let { facts ->
                 recyclerViewAdapter.updateData(facts)
@@ -110,6 +114,10 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
 
     override fun onRefresh() {
         viewModel.setStateEvent(MainStateEvent.LoadFactsEvent())
+    }
+
+    private fun handleInitialErrorInfo(isListEmpty: Boolean) {
+        ll_network_error_info.visibility = if (isListEmpty) View.VISIBLE else View.GONE
     }
 
     companion object {
