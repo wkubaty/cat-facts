@@ -113,6 +113,7 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
     }
 
     override fun onRefresh() {
+        swipe_layout.isRefreshing = true
         viewModel.setStateEvent(MainStateEvent.LoadFactsEvent())
     }
 
@@ -120,7 +121,4 @@ class FactListFragment : DaggerFragment(), CatFactsListRecyclerAdapter.OnFactCli
         ll_network_error_info.visibility = if (isListEmpty) View.VISIBLE else View.GONE
     }
 
-    companion object {
-        private const val TAG = "FactListFragment"
-    }
 }
