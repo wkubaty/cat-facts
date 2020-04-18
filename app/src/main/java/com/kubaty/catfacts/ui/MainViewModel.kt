@@ -30,17 +30,14 @@ class MainViewModel @Inject constructor(private val factsRepository: IFactsRepos
             stateEvent?.let {
                 when (stateEvent) {
                     is MainStateEvent.LoadFactsEvent -> {
-                        liveData(viewModelScope.coroutineContext) {
-                            val facts = factsRepository.getFacts(
-                                stateEvent.animalType,
-                                stateEvent.amount
-                            )
-                            emit(facts)
-                        }
+                        factsRepository.getFacts(
+                            stateEvent.animalType,
+                            stateEvent.amount
+                        ).asLiveData(viewModelScope.coroutineContext)
                     }
 
                     is MainStateEvent.NoneEvent -> {
-                        MutableLiveData<DataState<MainViewState>>()
+                        MutableLiveData()
 
                     }
                 }

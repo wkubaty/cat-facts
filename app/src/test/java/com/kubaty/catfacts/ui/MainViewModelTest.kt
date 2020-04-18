@@ -10,6 +10,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -53,7 +54,7 @@ class MainViewModelTest {
     @Test
     fun `dataState changes when setting new viewState`() {
         coEvery { mockRepository.getFacts(any(), any()) } coAnswers {
-            DataState.data(data = MainViewState(listOf(DUMMY_CAT_FACT)))
+            flow { emit(DataState.data(data = MainViewState(listOf(DUMMY_CAT_FACT)))) }
         }
         viewModel.setViewStateFacts(listOf(DUMMY_CAT_FACT), null)
         val dataState = viewModel.dataState.getOrAwaitValue()

@@ -3,7 +3,6 @@ package com.kubaty.catfacts.di
 import android.app.Application
 import com.kubaty.catfacts.TestFactsApplication
 import com.kubaty.catfacts.di.viewmodel.ViewModelModule
-import com.kubaty.catfacts.ui.FactListFragmentTest
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

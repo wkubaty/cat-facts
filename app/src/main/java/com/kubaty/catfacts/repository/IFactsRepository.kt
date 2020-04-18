@@ -2,7 +2,8 @@ package com.kubaty.catfacts.repository
 
 import com.kubaty.catfacts.ui.state.MainViewState
 import com.kubaty.catfacts.util.DataState
+import kotlinx.coroutines.flow.Flow
 
 interface IFactsRepository {
-    suspend fun getFacts(animalType: String, amount: Int): DataState<MainViewState>
+    fun getFacts(animalType: String, amount: Int): Flow<DataState<MainViewState>>
 }
